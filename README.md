@@ -62,6 +62,7 @@ Possible configuration parameters are:
 * `append` Array of anonymous functions (actually anything that `is_callable()`). Their return strings get appended to the message body.
 * `additional`  Array of anonymous functions (actually anything that `is_callable()`). Their return values get added as additional fields to the GELF message.
 * `levels` Array of log level, that will be sent to Graylog. See `\Psr\Log\LogLevel` for all possible values. Default: all of them.
+* `ignore_transport_errors` Ignore transport errors Default: `false`
 
 ### Further reading
 

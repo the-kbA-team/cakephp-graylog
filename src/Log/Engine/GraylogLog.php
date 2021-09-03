@@ -15,6 +15,7 @@ use kbATeam\PhpBacktrace\ClassicBacktrace;
 use LogicException;
 use kbATeam\GraylogUtilities\LogTypes;
 use kbATeam\GraylogUtilities\Obfuscator;
+use Gelf\Transport\IgnoreErrorTransportWrapper;
 
 /**
  * Class GraylogLog
@@ -58,7 +59,8 @@ class GraylogLog extends BaseLog
             'old_password',
             'current_password'
         ],
-        'levels' => []
+        'levels' => [],
+        'ignore_transport_errors' => false
     ];
 
     /**
@@ -166,7 +168,15 @@ class GraylogLog extends BaseLog
     protected function getPublisher()
     {
         if ($this->publisher === null) {
-            $this->publisher = new Publisher($this->getTransport());
+
+            $transport = $this->getTransport();
+
+            if($this->getConfig('ignore_transport_errors') === true){               
+                $transport = new IgnoreErrorTransportWrapper($transport);
+            }
+            
+            $this->publisher = new Publisher($transport);
+            
         }
         return $this->publisher;
     }
