@@ -7,7 +7,7 @@
   "require": {
     "php": "^8.0",
     "ext-json": "*",
-    "cakephp/cakephp": "^2.10",
+    "kba-team/cakephp": "^2.11",
     "graylog2/gelf-php": "^1.6",
     "composer/installers": "^1.9",
     "kba-team/php-backtrace": "^1.0",
@@ -21,10 +21,10 @@
   },
   "autoload-dev": {
     "classmap": [
-      "vendor/cakephp/cakephp/lib/Cake/Core/App.php",
-      "vendor/cakephp/cakephp/lib/Cake/Log/CakeLogInterface.php",
-      "vendor/cakephp/cakephp/lib/Cake/Log/Engine/BaseLog.php",
-      "vendor/cakephp/cakephp/lib/Cake/Utility/Hash.php",
+      "vendor/kba-team/cakephp/lib/Cake/Core/App.php",
+      "vendor/kba-team/cakephp/lib/Cake/Log/CakeLogInterface.php",
+      "vendor/kba-team/cakephp/lib/Cake/Log/Engine/BaseLog.php",
+      "vendor/kba-team/cakephp/lib/Cake/Utility/Hash.php",
       "Lib/Log/Engine/GraylogLog.php",
       "tests/PublicGraylogLog.php"
     ]
