@@ -2,7 +2,7 @@
 
 /**
  * In order to perform a write test, we simply overwrite the class \Gelf\Publisher
- * with a fake one, that will not actually publish anyting.
+ * with a fake one, that will not actually publish anything.
  * Yes it's dirty. Yes it's probably a bug in PHP. But it's so handy ... ^^
  * @noinspection PhpIllegalPsrClassPathInspection
  * @noinspection PhpMultipleClassesDeclarationsInOneFile
@@ -34,7 +34,9 @@ namespace Gelf {
 
         /**
          * @param \Gelf\MessageInterface $message
+         * @return void
          */
+
         public function publish($message)
         {
             $this->message = $message;
@@ -46,16 +48,18 @@ namespace {
 
     use Gelf\Message as GelfMessage;
     use Gelf\Transport\UdpTransport;
+    use PHPUnit\Framework\TestCase;
 
     /**
      * Class GraylogWriteTest
      */
-    class GraylogWriteTest extends PHPUnit_Framework_TestCase
+    class GraylogWriteTest extends TestCase
     {
         /**
          * Test writing a message using a fake publisher class.
+         * @return void
          */
-        public function testWriteUsingFakePublisher()
+        public function testWriteUsingFakePublisher(): void
         {
             $log = new PublicGraylogLog([
                 'append_backtrace' => false,
