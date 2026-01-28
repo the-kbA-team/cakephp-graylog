@@ -6,7 +6,7 @@
 [![Maintainability][maintainability-badge]][maintainability]
 [![Test Coverage][coverage-badge]][coverage]
 
-Graylog log engine for CakePHP 3.x
+Graylog log engine for CakePHP 5.x
 
 ## Usage
 
@@ -66,7 +66,7 @@ Possible configuration parameters are:
 
 ### Further reading
 
-* About [CakePHP 3.x Logging](https://book.cakephp.org/3/en/core-libraries/logging.html)
+* About [CakePHP 5.x Logging](https://book.cakephp.org/5/en/core-libraries/logging.html)
 * About [Graylog 3.x in general](https://docs.graylog.org/en/3.1/index.html)
 * About [Graylog Extended Log Format (GELF)](https://docs.graylog.org/en/3.1/pages/gelf.html)
 
@@ -74,7 +74,7 @@ Possible configuration parameters are:
 [packagist-badge]: https://img.shields.io/packagist/v/kba-team/cakephp-graylog
 [packagist]: https://packagist.org/packages/kba-team/cakephp-graylog
 [travis-ci]: https://travis-ci.org/the-kbA-team/cakephp-graylog
-[build-status-master]: https://api.travis-ci.org/the-kbA-team/cakephp-graylog.svg?branch=master
+[build-status-master]: https://api.travis-ci.org/the-kbA-team/cakephp-graylog.svg?branch=cake5
 [maintainability-badge]: https://api.codeclimate.com/v1/badges/04abc6d1562d5f628f8a/maintainability
 [maintainability]: https://codeclimate.com/github/the-kbA-team/cakephp-graylog/maintainability
 [coverage-badge]: https://api.codeclimate.com/v1/badges/04abc6d1562d5f628f8a/test_coverage
