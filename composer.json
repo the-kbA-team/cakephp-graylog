@@ -13,6 +13,9 @@
     "kba-team/php-backtrace": "^1.0",
     "kba-team/graylog-utilities": "^2.0"
   },
+  "conflict": {
+    "kba-team/cakephp2-graylog": "*"
+  },
   "extra": {
     "installer-name": "Graylog"
   },
