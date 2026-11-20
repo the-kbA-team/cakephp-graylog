@@ -87,7 +87,8 @@ variables and `CA_CERT_FILE` if your network requires them.
 Use an issue branch named `<issue-number>-<title-slug>` and open a pull request
 against the relevant release branch. The `main` branch requires a pull request,
 passing checks, an up-to-date branch and linear history; use squash merge.
-The CakePHP 2 release line is maintained separately on `cake2`.
+The CakePHP 2 release line is moving to
+[`the-kbA-team/cakephp2-graylog`](https://github.com/the-kbA-team/cakephp2-graylog).
 Force pushes are blocked outside branch names matching `[0-9]*-*`; this
 pattern is broader than the issue-branch naming convention.
 
