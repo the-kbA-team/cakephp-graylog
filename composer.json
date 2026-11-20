@@ -16,6 +16,9 @@
   "conflict": {
     "kba-team/cakephp2-graylog": "*"
   },
+  "suggest": {
+    "kba-team/cakephp2-graylog": "Use this package instead for the maintained CakePHP 2 release line."
+  },
   "extra": {
     "installer-name": "Graylog"
   },
