@@ -29,7 +29,7 @@ namespace Gelf {
          * FakePublisher constructor.
          * @param TransportInterface|null $transport
          */
-        public function __construct(TransportInterface $transport = null)
+        public function __construct(?TransportInterface $transport = null)
         {
             $this->transport = $transport;
         }

@@ -2,7 +2,6 @@
 
 [![License: MIT][license-mit]](LICENSE)
 [![Packagist Version][packagist-badge]][packagist]
-[![Build Status][build-status-master]][travis-ci]
 [![Maintainability][maintainability-badge]][maintainability]
 [![Test Coverage][coverage-badge]][coverage]
 
@@ -16,7 +15,7 @@ composer require kba-team/cakephp-graylog
 
 ```php
 <?php
-\Cake\Core\Configure::write('Log.graylog', [
+\Cake\Log\Log::setConfig('graylog', [
     'className' => \kbATeam\CakePhpGraylog\Log\Engine\GraylogLog::class,
     'levels' => [\Psr\Log\LogLevel::EMERGENCY, \Psr\Log\LogLevel::ALERT, \Psr\Log\LogLevel::CRITICAL],
     'host' => 'graylog.example.com',
@@ -44,7 +43,7 @@ composer require kba-team/cakephp-graylog
     'additional' => [
         //Add field 'current_user' to the GELF message.
         'current_user' => static function () {
-             return AuthComponent::user('username');
+             return 'system';
         }
     ]
 ]);
@@ -59,10 +58,40 @@ Possible configuration parameters are:
 * `chunk_size` The size of the UDP packages. Default: `\Gelf\Transport\UdpTransport::CHUNK_SIZE_LAN`
 * `ssl_options` An instance of `\Gelf\Transport\SslOptions` defining SSL settings for TCP connections. Default: `null`
 * `facility` The logging facility. Default: `CakePHP`.
-* `append_backtrace` Append a backtrace to the message? Default: `true`
+* `append_backtrace` Append a backtrace to the message? Default: `false`
 * `append` Array of anonymous functions (actually anything that `is_callable()`). Their return strings get appended to the message body.
 * `additional`  Array of anonymous functions (actually anything that `is_callable()`). Their return values get added as additional fields to the GELF message.
 * `levels` Array of log level, that will be sent to Graylog. See `\Psr\Log\LogLevel` for all possible values. Default: all of them.
+
+## Development
+
+The package supports PHP `^8.1` and tests PHP 8.1 and 8.5 with both default
+and lowest dependency versions. Docker and network access are required.
+
+```sh
+make help
+make validate PHP_VERSION=8.1
+make check PHP_VERSION=8.1
+make check PHP_VERSION=8.1 DEPENDENCIES_LOWEST=1
+make check PHP_VERSION=8.5
+make check PHP_VERSION=8.5 DEPENDENCIES_LOWEST=1
+```
+
+`check` installs dependencies, runs lint, PHPUnit and PHPStan, then audits the
+same dependency snapshot. `install` and `audit` resolve their own snapshots.
+These commands refuse to overwrite an existing `composer.lock` and remove
+their temporary lockfile. QA commands require `flock` and reject concurrent
+runs in the same checkout. `make clean` removes generated `vendor/` and PHPUnit
+cache files. Set `COMPOSER_IMAGE` to select the Composer image, and set proxy
+variables and `CA_CERT_FILE` if your network requires them.
+
+Use an issue branch named `<issue-number>-<title-slug>` and open a pull request
+against the relevant release branch. The `main` branch requires a pull request,
+passing checks, an up-to-date branch and linear history; use squash merge.
+The CakePHP 2 release line is moving to
+[`the-kbA-team/cakephp2-graylog`](https://github.com/the-kbA-team/cakephp2-graylog).
+Force pushes are blocked outside branch names matching `[0-9]*-*`; this
+pattern is broader than the issue-branch naming convention.
 
 ### Further reading
 
@@ -73,8 +102,6 @@ Possible configuration parameters are:
 [license-mit]: https://img.shields.io/badge/license-MIT-blue.svg
 [packagist-badge]: https://img.shields.io/packagist/v/kba-team/cakephp-graylog
 [packagist]: https://packagist.org/packages/kba-team/cakephp-graylog
-[travis-ci]: https://travis-ci.org/the-kbA-team/cakephp-graylog
-[build-status-master]: https://api.travis-ci.org/the-kbA-team/cakephp-graylog.svg?branch=cake5
 [maintainability-badge]: https://api.codeclimate.com/v1/badges/04abc6d1562d5f628f8a/maintainability
 [maintainability]: https://codeclimate.com/github/the-kbA-team/cakephp-graylog/maintainability
 [coverage-badge]: https://api.codeclimate.com/v1/badges/04abc6d1562d5f628f8a/test_coverage
