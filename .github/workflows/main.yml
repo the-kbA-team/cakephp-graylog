@@ -4,21 +4,45 @@ name: CI
 
 # Controls when the action will run.
 on:
-  # Triggers the workflow on push or pull request events
-  push:
   pull_request:
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
+  modernized:
+    name: Modernized PHP ${{ matrix.php_version }} (${{ matrix.dependencies }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php_version: ['8.1', '8.5']
+        dependencies: ['default', 'lowest']
+    steps:
+      - uses: actions/checkout@v7
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php_version }}
+          extensions: intl, mbstring
+          tools: composer:v2
+      - name: Validate Composer configuration
+        run: make validate QA_NATIVE=1 PHP_VERSION=${{ matrix.php_version }}
+      - name: Install, test and audit
+        run: make check QA_NATIVE=1 PHP_VERSION=${{ matrix.php_version }} DEPENDENCIES_LOWEST=${{ matrix.dependencies == 'lowest' && '1' || '0' }}
+
   # Composer config validation
   composer:
     name: Composer config validation
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v7
       - name: Validate composer.json
         run: composer validate --strict
 
@@ -27,7 +51,7 @@ jobs:
     name: PHP syntax validation
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v7
       - name: Check PHP syntax
         run: php -l src/ tests/
 
@@ -38,7 +62,7 @@ jobs:
       matrix:
         php_version: [ '8.1', '8.2' ]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v7
       - uses: php-actions/composer@v6
         with:
           php_version: ${{ matrix.php_version }}
@@ -53,7 +77,7 @@ jobs:
       matrix:
         php_version: [ '8.1', '8.2' ]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v7
       - uses: php-actions/composer@v6
         with:
           php_version: ${{ matrix.php_version }}

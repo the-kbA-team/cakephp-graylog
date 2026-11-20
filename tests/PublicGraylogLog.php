@@ -21,7 +21,7 @@ class PublicGraylogLog extends GraylogLog
      * @return array|mixed
      * @throws InvalidArgumentException
      */
-    public function getMyConfig(string $key = null)
+    public function getMyConfig(?string $key = null)
     {
         if ($key === null) {
             return $this->_config;
