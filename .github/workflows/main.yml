@@ -37,7 +37,7 @@ jobs:
       - name: Install, test and audit
         run: make check QA_NATIVE=1 PHP_VERSION=${{ matrix.php_version }} DEPENDENCIES_LOWEST=${{ matrix.dependencies == 'lowest' && '1' || '0' }}
 
-  # Composer config validation
+  # Retain these check names until branch protection is migrated.
   composer:
     name: Composer config validation
     runs-on: ubuntu-latest
@@ -63,12 +63,13 @@ jobs:
         php_version: [ '8.1', '8.2' ]
     steps:
       - uses: actions/checkout@v7
-      - uses: php-actions/composer@v6
+      - uses: shivammathur/setup-php@v2
         with:
-          php_version: ${{ matrix.php_version }}
-          php_extensions: intl
-
-      - run: vendor/bin/phpunit
+          php-version: ${{ matrix.php_version }}
+          extensions: intl, mbstring
+          tools: composer:v2
+      - run: make install QA_NATIVE=1 PHP_VERSION=${{ matrix.php_version }}
+      - run: make test QA_NATIVE=1 PHP_VERSION=${{ matrix.php_version }}
 
   # phpstan for several php versions
   phpstan:
@@ -78,12 +79,10 @@ jobs:
         php_version: [ '8.1', '8.2' ]
     steps:
       - uses: actions/checkout@v7
-      - uses: php-actions/composer@v6
+      - uses: shivammathur/setup-php@v2
         with:
-          php_version: ${{ matrix.php_version }}
-          php_extensions: intl
-      - name: PHPStan Static Analysis
-        uses: php-actions/phpstan@v3
-        with:
-          php_version: ${{ matrix.php_version }}
-          configuration: phpstan.neon
+          php-version: ${{ matrix.php_version }}
+          extensions: intl, mbstring
+          tools: composer:v2
+      - run: make install QA_NATIVE=1 PHP_VERSION=${{ matrix.php_version }}
+      - run: make analyze QA_NATIVE=1 PHP_VERSION=${{ matrix.php_version }}
